@@ -3,6 +3,7 @@ import 'package:a2_flash_chat/components/flash_chat_keys.dart';
 import 'package:a2_flash_chat/components/flash_chat_methods.dart';
 import 'package:a2_flash_chat/constants.dart';
 import 'package:a2_flash_chat/screens/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
@@ -13,6 +14,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  String email;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +43,9 @@ class _LoginScreenState extends State<LoginScreen> {
               child: TextField(
                 keyboardType: TextInputType.emailAddress,
                 keyboardAppearance: Brightness.dark,
-                onChanged:(value){},
+                onChanged:(value){
+                  email = value;
+                },
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -54,7 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
               child: TextField(
                 obscureText: true,
                 keyboardAppearance: Brightness.dark,
-                onChanged:(value){},
+                onChanged:(value){
+                  password = value;
+                },
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -70,8 +79,20 @@ class _LoginScreenState extends State<LoginScreen> {
               child: FlashChatButton(
                 color: Colors.green,
                 text: 'Log in',
-                onPressed: (){
-                  //register
+                onPressed: () async {
+                  try{
+                    final newUser = 
+                    await _auth.signInWithEmailAndPassword(
+                      email: email, 
+                      password: password
+                    );
+                    return Navigator.popAndPushNamed(
+                      context, 
+                      'chat_screen'
+                    );
+                  }catch(e){
+                    print(e);
+                  }
                 }
               ),
             ),

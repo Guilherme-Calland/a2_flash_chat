@@ -3,6 +3,7 @@ import 'package:a2_flash_chat/components/flash_chat_keys.dart';
 import 'package:a2_flash_chat/components/flash_chat_methods.dart';
 import 'package:a2_flash_chat/constants.dart';
 import 'package:a2_flash_chat/screens/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
@@ -13,6 +14,10 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  String email;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +43,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               child: TextField(
                 keyboardType: TextInputType.emailAddress,
                 keyboardAppearance: Brightness.dark,
-                onChanged:(value){},
+                onChanged:(value){
+                  email = value;
+                },
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -54,7 +61,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               child: TextField(
                 obscureText: true,
                 keyboardAppearance: Brightness.dark,
-                onChanged:(value){},
+                onChanged:(value){
+                  password = value;
+                },
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -70,8 +79,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               child: FlashChatButton(
                 color: Colors.blue,
                 text: 'Register',
-                onPressed: (){
-                  //register
+                onPressed: ()async{
+                  try{
+                    final newUser = 
+                    await _auth.createUserWithEmailAndPassword(
+                      email: email, 
+                      password: password
+                    );
+                    return Navigator.popAndPushNamed(
+                      context, 
+                      'chat_screen'
+                    );
+                    print('aqui reg');
+                  }catch(e){
+                    print(e);
+                  }
                 }
               ),
             ),
