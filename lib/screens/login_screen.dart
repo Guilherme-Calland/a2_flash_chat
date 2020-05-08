@@ -17,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   String email;
   String password;
+  String exceptionMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+            SizedBox(height: 130,),
               SlideInDown(
                 key: loginSlideInDownKey,
                 child: Text(
@@ -106,10 +108,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: (){
                     Navigator.popAndPushNamed(
                       context,
-                      'welcome_screen');
+                      'welcome_screen'
+                    );
                   }
                 ),
-              )
+              ),
             ],
           ),
         ),

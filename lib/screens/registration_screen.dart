@@ -17,6 +17,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   String email;
   String password;
+  String exceptionMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              SizedBox(height: 130,),
               SlideInDown(
                 key: registrationSlideInDownKey,
                 child: Text(
@@ -107,10 +109,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   onPressed: (){
                     Navigator.popAndPushNamed(
                       context,
-                      'welcome_screen');
+                      'welcome_screen'
+                    );
                   }
                 ),
-              )
+              ),
             ],
           ),
         ),
