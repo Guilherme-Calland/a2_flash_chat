@@ -22,94 +22,96 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: flashChatBackGroundColor,
-      body: Padding(
-        padding: const EdgeInsets.all(45.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SlideInDown(
-              key: loginSlideInDownKey,
-              child: Text(
-                'Login',
-                style: flashChatTitleTextStyle.copyWith(
-                  color: Colors.green
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(45.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SlideInDown(
+                key: loginSlideInDownKey,
+                child: Text(
+                  'Login',
+                  style: flashChatTitleTextStyle.copyWith(
+                    color: Colors.green
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 48),
-            SlideInRight(
-              key: loginSlideInRightKey,
-              child: TextField(
-                keyboardType: TextInputType.emailAddress,
-                keyboardAppearance: Brightness.dark,
-                onChanged:(value){
-                  email = value;
-                },
-                style: TextStyle(
-                  color: Colors.white,
+              SizedBox(height: 48),
+              SlideInRight(
+                key: loginSlideInRightKey,
+                child: TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  keyboardAppearance: Brightness.dark,
+                  onChanged:(value){
+                    email = value;
+                  },
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: flashChatTextFieldDecoration(
+                    hintText: 'Enter your email',
+                    borderColor: Colors.green
+                  )
                 ),
-                decoration: flashChatTextFieldDecoration(
-                  hintText: 'Enter your email',
-                  borderColor: Colors.green
-                )
               ),
-            ),
-            SizedBox(height: 20),
-            SlideInLeft(
-              key: loginSlideInLeftKey,
-              child: TextField(
-                obscureText: true,
-                keyboardAppearance: Brightness.dark,
-                onChanged:(value){
-                  password = value;
-                },
-                style: TextStyle(
-                  color: Colors.white,
+              SizedBox(height: 20),
+              SlideInLeft(
+                key: loginSlideInLeftKey,
+                child: TextField(
+                  obscureText: true,
+                  keyboardAppearance: Brightness.dark,
+                  onChanged:(value){
+                    password = value;
+                  },
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: flashChatTextFieldDecoration(
+                    hintText: 'Enter your password',
+                    borderColor: Colors.green
+                  )
                 ),
-                decoration: flashChatTextFieldDecoration(
-                  hintText: 'Enter your password',
-                  borderColor: Colors.green
-                )
               ),
-            ),
-            SizedBox(height: 56),
-            SlideInRight(
-              key: loginSlideInRightButtonKey,
-              child: FlashChatButton(
-                color: Colors.green,
-                text: 'Log in',
-                onPressed: () async {
-                  try{
-                    final newUser = 
-                    await _auth.signInWithEmailAndPassword(
-                      email: email, 
-                      password: password
-                    );
-                    return Navigator.popAndPushNamed(
-                      context, 
-                      'chat_screen'
-                    );
-                  }catch(e){
-                    print(e);
+              SizedBox(height: 56),
+              SlideInRight(
+                key: loginSlideInRightButtonKey,
+                child: FlashChatButton(
+                  color: Colors.green,
+                  text: 'Log in',
+                  onPressed: () async {
+                    try{
+                      final newUser = 
+                      await _auth.signInWithEmailAndPassword(
+                        email: email, 
+                        password: password
+                      );
+                      return Navigator.popAndPushNamed(
+                        context, 
+                        'chat_screen'
+                      );
+                    }catch(e){
+                      print(e);
+                    }
                   }
-                }
+                ),
               ),
-            ),
-            SizedBox(height: 30),
-            SlideInLeft(
-              key: loginSlideInLeftButtonKey,
-              child: FlashChatButton(
-                color: Color(0xff043500),
-                text: 'Back',
-                onPressed: (){
-                  Navigator.popAndPushNamed(
-                    context,
-                    'welcome_screen');
-                }
-              ),
-            )
-          ],
+              SizedBox(height: 30),
+              SlideInLeft(
+                key: loginSlideInLeftButtonKey,
+                child: FlashChatButton(
+                  color: Color(0xff043500),
+                  text: 'Back',
+                  onPressed: (){
+                    Navigator.popAndPushNamed(
+                      context,
+                      'welcome_screen');
+                  }
+                ),
+              )
+            ],
+          ),
         ),
       )
     );

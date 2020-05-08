@@ -22,95 +22,97 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: flashChatBackGroundColor,
-      body: Padding(
-        padding: const EdgeInsets.all(45.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SlideInDown(
-              key: registrationSlideInDownKey,
-              child: Text(
-                'Registration',
-                style: flashChatTitleTextStyle.copyWith(
-                  color: Colors.blue
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(45.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SlideInDown(
+                key: registrationSlideInDownKey,
+                child: Text(
+                  'Registration',
+                  style: flashChatTitleTextStyle.copyWith(
+                    color: Colors.blue
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 48),
-            SlideInRight(
-              key: registrationSlideInRightKey,
-              child: TextField(
-                keyboardType: TextInputType.emailAddress,
-                keyboardAppearance: Brightness.dark,
-                onChanged:(value){
-                  email = value;
-                },
-                style: TextStyle(
-                  color: Colors.white,
+              SizedBox(height: 48),
+              SlideInRight(
+                key: registrationSlideInRightKey,
+                child: TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  keyboardAppearance: Brightness.dark,
+                  onChanged:(value){
+                    email = value;
+                  },
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: flashChatTextFieldDecoration(
+                    hintText: 'Enter your email',
+                    borderColor: Colors.blue
+                  )
                 ),
-                decoration: flashChatTextFieldDecoration(
-                  hintText: 'Enter your email',
-                  borderColor: Colors.blue
+              ),
+              SizedBox(height: 20),
+              SlideInLeft(
+                key: registrationSlideInLeftKey,
+                child: TextField(
+                  obscureText: true,
+                  keyboardAppearance: Brightness.dark,
+                  onChanged:(value){
+                    password = value;
+                  },
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: flashChatTextFieldDecoration(
+                    hintText : 'Enter your password', 
+                    borderColor: Colors.blue
+                  )
                 )
               ),
-            ),
-            SizedBox(height: 20),
-            SlideInLeft(
-              key: registrationSlideInLeftKey,
-              child: TextField(
-                obscureText: true,
-                keyboardAppearance: Brightness.dark,
-                onChanged:(value){
-                  password = value;
-                },
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                decoration: flashChatTextFieldDecoration(
-                  hintText : 'Enter your password', 
-                  borderColor: Colors.blue
-                )
-              )
-            ),
-            SizedBox(height: 56),
-            SlideInRight(
-              key: registrationSlideInRightButtonKey,
-              child: FlashChatButton(
-                color: Colors.blue,
-                text: 'Register',
-                onPressed: ()async{
-                  try{
-                    final newUser = 
-                    await _auth.createUserWithEmailAndPassword(
-                      email: email, 
-                      password: password
-                    );
-                    return Navigator.popAndPushNamed(
-                      context, 
-                      'chat_screen'
-                    );
-                    print('aqui reg');
-                  }catch(e){
-                    print(e);
+              SizedBox(height: 56),
+              SlideInRight(
+                key: registrationSlideInRightButtonKey,
+                child: FlashChatButton(
+                  color: Colors.blue,
+                  text: 'Register',
+                  onPressed: ()async{
+                    try{
+                      final newUser = 
+                      await _auth.createUserWithEmailAndPassword(
+                        email: email, 
+                        password: password
+                      );
+                      return Navigator.popAndPushNamed(
+                        context, 
+                        'chat_screen'
+                      );
+                      print('aqui reg');
+                    }catch(e){
+                      print(e);
+                    }
                   }
-                }
+                ),
               ),
-            ),
-            SizedBox(height: 30),
-            SlideInLeft(
-              key: registrationSlideInLeftButtonKey,
-              child: FlashChatButton(
-                color: Color(0xff003758),
-                text: 'Back',
-                onPressed: (){
-                  Navigator.popAndPushNamed(
-                    context,
-                    'welcome_screen');
-                }
-              ),
-            )
-          ],
+              SizedBox(height: 30),
+              SlideInLeft(
+                key: registrationSlideInLeftButtonKey,
+                child: FlashChatButton(
+                  color: Color(0xff003758),
+                  text: 'Back',
+                  onPressed: (){
+                    Navigator.popAndPushNamed(
+                      context,
+                      'welcome_screen');
+                  }
+                ),
+              )
+            ],
+          ),
         ),
       )
     );
