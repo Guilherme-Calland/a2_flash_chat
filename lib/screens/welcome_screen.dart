@@ -1,3 +1,5 @@
+import 'package:a2_flash_chat/components/flash_chat_button.dart';
+import 'package:a2_flash_chat/components/flash_chat_keys.dart';
 import 'package:a2_flash_chat/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
@@ -10,14 +12,6 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
-
-  final GlobalKey<AnimatorWidgetState> slideInDownKey =
-  GlobalKey<AnimatorWidgetState>();
-  final GlobalKey<AnimatorWidgetState> slideInRightKey =
-  GlobalKey<AnimatorWidgetState>();
-  final GlobalKey<AnimatorWidgetState> slideInLeftKey =
-  GlobalKey<AnimatorWidgetState>();
-  
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: flashChatBackGroundColor,
@@ -27,7 +21,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SlideInDown(
-              key: slideInDownKey,
+              key: welcomeSlideInDownKey,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -45,7 +39,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               height: 48,
             ),
             SlideInRight(
-              key: slideInRightKey,
+              key: welcomeSlideInRightKey,
               child: FlashChatButton(
                 text: 'Log in',
                 color: Colors.green,
@@ -61,7 +55,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               height: 20,
             ),
             SlideInLeft(
-              key: slideInLeftKey,
+              key: welcomeSlideInLeftKey,
               child: FlashChatButton(
                 text: 'Register',
                 color: Colors.blue,
@@ -80,34 +74,3 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 }
 
-class FlashChatButton extends StatelessWidget {
-  String text;
-  Color color;
-  Function onPressed;
-  FlashChatButton({this.text, this.color, this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: color,
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      child: MaterialButton(
-        onPressed: onPressed,
-        minWidth: 300,
-        padding: EdgeInsets.symmetric(
-          horizontal: 40,
-          vertical: 20
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold
-          ),
-        ),
-      )
-    );
-  }
-}

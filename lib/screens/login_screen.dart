@@ -1,3 +1,5 @@
+import 'package:a2_flash_chat/components/flash_chat_button.dart';
+import 'package:a2_flash_chat/components/flash_chat_keys.dart';
 import 'package:a2_flash_chat/components/flash_chat_methods.dart';
 import 'package:a2_flash_chat/constants.dart';
 import 'package:a2_flash_chat/screens/welcome_screen.dart';
@@ -11,17 +13,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final GlobalKey<AnimatorWidgetState> slideInDownKey =
-  GlobalKey<AnimatorWidgetState>();
-  final GlobalKey<AnimatorWidgetState> slideInRightKey =
-  GlobalKey<AnimatorWidgetState>();
-  final GlobalKey<AnimatorWidgetState> slideInLeftKey =
-  GlobalKey<AnimatorWidgetState>();
-    final GlobalKey<AnimatorWidgetState> slideInRightButtonKey =
-  GlobalKey<AnimatorWidgetState>();
-  final GlobalKey<AnimatorWidgetState> slideInLeftButtonKey =
-  GlobalKey<AnimatorWidgetState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SlideInDown(
-              key: slideInDownKey,
+              key: loginSlideInDownKey,
               child: Text(
                 'Login',
                 style: flashChatTitleTextStyle.copyWith(
@@ -43,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: 48),
             SlideInRight(
-              key: slideInRightKey,
+              key: loginSlideInRightKey,
               child: TextField(
                 keyboardType: TextInputType.emailAddress,
                 keyboardAppearance: Brightness.dark,
@@ -59,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: 20),
             SlideInLeft(
-              key: slideInLeftKey,
+              key: loginSlideInLeftKey,
               child: TextField(
                 obscureText: true,
                 keyboardAppearance: Brightness.dark,
@@ -75,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: 56),
             SlideInRight(
-              key: slideInRightButtonKey,
+              key: loginSlideInRightButtonKey,
               child: FlashChatButton(
                 color: Colors.green,
                 text: 'Log in',
@@ -86,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: 30),
             SlideInLeft(
-              key: slideInLeftButtonKey,
+              key: loginSlideInLeftButtonKey,
               child: FlashChatButton(
                 color: Color(0xff043500),
                 text: 'Back',

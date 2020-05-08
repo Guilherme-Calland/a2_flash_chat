@@ -1,3 +1,5 @@
+import 'package:a2_flash_chat/components/flash_chat_button.dart';
+import 'package:a2_flash_chat/components/flash_chat_keys.dart';
 import 'package:a2_flash_chat/components/flash_chat_methods.dart';
 import 'package:a2_flash_chat/constants.dart';
 import 'package:a2_flash_chat/screens/welcome_screen.dart';
@@ -11,17 +13,6 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final GlobalKey<AnimatorWidgetState> slideInDownKey =
-  GlobalKey<AnimatorWidgetState>();
-  final GlobalKey<AnimatorWidgetState> slideInRightKey =
-  GlobalKey<AnimatorWidgetState>();
-  final GlobalKey<AnimatorWidgetState> slideInLeftKey =
-  GlobalKey<AnimatorWidgetState>();
-  final GlobalKey<AnimatorWidgetState> slideInRightButtonKey =
-  GlobalKey<AnimatorWidgetState>();
-  final GlobalKey<AnimatorWidgetState> slideInLeftButtonKey =
-  GlobalKey<AnimatorWidgetState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +24,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SlideInDown(
-              key: slideInDownKey,
+              key: registrationSlideInDownKey,
               child: Text(
                 'Registration',
                 style: flashChatTitleTextStyle.copyWith(
@@ -43,7 +34,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             SizedBox(height: 48),
             SlideInRight(
-              key: slideInRightKey,
+              key: registrationSlideInRightKey,
               child: TextField(
                 keyboardType: TextInputType.emailAddress,
                 keyboardAppearance: Brightness.dark,
@@ -59,7 +50,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             SizedBox(height: 20),
             SlideInLeft(
-              key: slideInLeftKey,
+              key: registrationSlideInLeftKey,
               child: TextField(
                 obscureText: true,
                 keyboardAppearance: Brightness.dark,
@@ -75,7 +66,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             SizedBox(height: 56),
             SlideInRight(
-              key: slideInRightButtonKey,
+              key: registrationSlideInRightButtonKey,
               child: FlashChatButton(
                 color: Colors.blue,
                 text: 'Register',
@@ -86,7 +77,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             SizedBox(height: 30),
             SlideInLeft(
-              key: slideInLeftButtonKey,
+              key: registrationSlideInLeftButtonKey,
               child: FlashChatButton(
                 color: Color(0xff003758),
                 text: 'Back',
