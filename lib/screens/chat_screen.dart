@@ -14,6 +14,8 @@ Firestore _firestore = Firestore.instance;
 class _ChatScreenState extends State<ChatScreen> {
   FirebaseUser currentUser;
   FirebaseAuth _auth;
+  var controller = TextEditingController();
+  String currentMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +43,48 @@ class _ChatScreenState extends State<ChatScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           MessagesStream(),
-          Center(
-            child: Text('hey')
-          )
+          Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    color: Color(0xff003758),
+                    child: TextField(
+                      controller: controller,
+                      style: TextStyle(
+                        color: Colors.black
+                      ),
+                      onChanged: (value) {
+                        currentMessage = value;
+                      },
+                    ),
+                  ),
+                ),
+                FlatButton(
+                  padding: EdgeInsets.symmetric(vertical: 14),
+                  disabledColor: Color(0xff00253b),
+                  child: Text(
+                    'Send',
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
+                  ),
+                  // onPressed: () {
+                  //   _firestore.collection('messages').add(
+                  //     {
+                  //       'text' : messageText,
+                  //       'sender' : loggedInUser.email
+                  //     }
+                  //   );
+                  //   messageTextController.clear();
+                  // },
+                  // child: Text(
+                  //   'Send',
+                ),
+              ],
+            ),
+          ),
         ],
       )
     );
