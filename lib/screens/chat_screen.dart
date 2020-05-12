@@ -1,3 +1,4 @@
+import 'package:a2_flash_chat/components/message_bubble.dart';
 import 'package:a2_flash_chat/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +12,7 @@ class ChatScreen extends StatefulWidget {
 
 final _firestore = Firestore.instance;
 FirebaseUser currentUser;
+bool isMe = false;
 
 class _ChatScreenState extends State<ChatScreen> {
 
@@ -125,7 +127,7 @@ class MessagesStream extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder <QuerySnapshot>(
       stream: _firestore.collection('messages')
-      .orderBy('date').snapshots(),
+      .orderBy('date', descending: true).snapshots(),
       builder: (context, snapshot){
         if(!snapshot.hasData){
           return Center(
@@ -135,16 +137,15 @@ class MessagesStream extends StatelessWidget {
           );
         }
         final messages = snapshot.data.documents;
-        List< Text > messageBubbles = [];
+        List< MessageBubble > messageBubbles = [];
         for(var message in messages){
           final text = message.data['text'];
           final sender = message.data['sender'];
           final messageBubble = 
-          Text(
-            '$text from $sender',
-            style: TextStyle(
-              color: Colors.white
-            ),
+          MessageBubble(
+            text: text,
+            sender: sender,
+            isMe: sender == currentUser.email 
           );
           messageBubbles.add(messageBubble);
         }
