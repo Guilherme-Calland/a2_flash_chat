@@ -9,13 +9,39 @@ class ChatScreen extends StatefulWidget {
   _ChatScreenState createState() => _ChatScreenState();
 }
 
-Firestore _firestore = Firestore.instance;
+final _firestore = Firestore.instance;
+FirebaseUser currentUser;
 
 class _ChatScreenState extends State<ChatScreen> {
-  FirebaseUser currentUser;
-  FirebaseAuth _auth;
+
+  var _auth = FirebaseAuth.instance;
   var controller = TextEditingController();
   String currentMessage;
+  
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    _auth.signOut();
+  }
+
+  void getCurrentUser() async{
+    try{
+      final user = await _auth.currentUser();
+      if(user != null){
+        currentUser = user;
+        print('Currrent User: ' + currentUser.email);
+      }
+    }catch(e){
+      print('didnt manage to get user wawa: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +79,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: TextField(
                       controller: controller,
                       style: TextStyle(
-                        color: Colors.black
+                        color: Colors.white
                       ),
                       onChanged: (value) {
                         currentMessage = value;
@@ -63,6 +89,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 FlatButton(
                   padding: EdgeInsets.symmetric(vertical: 14),
+                  color: Color(0xff00253b),
                   disabledColor: Color(0xff00253b),
                   child: Text(
                     'Send',
@@ -70,17 +97,17 @@ class _ChatScreenState extends State<ChatScreen> {
                       color: Colors.white
                     ),
                   ),
-                  // onPressed: () {
-                  //   _firestore.collection('messages').add(
-                  //     {
-                  //       'text' : messageText,
-                  //       'sender' : loggedInUser.email
-                  //     }
-                  //   );
-                  //   messageTextController.clear();
-                  // },
-                  // child: Text(
-                  //   'Send',
+                  onPressed: () {
+                    controller.clear();
+                    _firestore.collection('messages')
+                    .add(
+                      {
+                        'text' : currentMessage,
+                        'sender' : currentUser.email,
+                        'date' : DateTime.now()
+                      }
+                    );
+                  },
                 ),
               ],
             ),
@@ -97,7 +124,8 @@ class MessagesStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder <QuerySnapshot>(
-      stream: _firestore.collection('messages').snapshots(),
+      stream: _firestore.collection('messages')
+      .orderBy('date').snapshots(),
       builder: (context, snapshot){
         if(!snapshot.hasData){
           return Center(
@@ -106,7 +134,7 @@ class MessagesStream extends StatelessWidget {
             )
           );
         }
-        final messages = snapshot.data.documents.reversed;
+        final messages = snapshot.data.documents;
         List< Text > messageBubbles = [];
         for(var message in messages){
           final text = message.data['text'];
